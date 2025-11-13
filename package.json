@@ -1,5 +1,18 @@
 {
+  "name": "pedidos-fj",
+  "version": "1.0.0",
+  "description": "Proyecto de pedidos en Node.js",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "dotenv": "^17.2.3"
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.3"
   }
 }
