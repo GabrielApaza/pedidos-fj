@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (nuevoNombre === "") return alert("El nombre no puede estar vacío");
 
-    fetch(`http://localhost:3000/api/clientes/${id}`, {
+    fetch(`https://pedidos-fj.onrender.com/api/clientes/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ nombre: nuevoNombre })
@@ -60,10 +60,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function obtenerClientes() {
-  fetch("http://localhost:3000/api/clientes")
+  fetch("https://pedidos-fj.onrender.com/api/clientes")
     .then(res => res.json())
     .then(clientes => {
-      clientesGlobal = clientes; // guardamos todos los clientes
+      clientesGlobal = clientes;
       mostrarClientes(clientes);
     })
     .catch(err => console.error("Error al obtener clientes:", err));
@@ -94,9 +94,6 @@ function mostrarClientes(clientes) {
   });
 }
 
-// ======================
-// Mensajes pequeños debajo del input
-// ======================
 function mostrarMensaje(texto, tipo = "success") {
   const mensaje = document.getElementById("mensajeCliente");
   mensaje.textContent = texto;
@@ -114,7 +111,7 @@ function agregarCliente() {
     return;
   }
 
-  fetch("http://localhost:3000/api/clientes", {
+  fetch("https://pedidos-fj.onrender.com/api/clientes", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nombre })
@@ -135,7 +132,6 @@ function agregarCliente() {
     });
 }
 
-
 function abrirModalEditar(id, nombre) {
   document.getElementById("editarClienteId").value = id;
   document.getElementById("editarClienteNombre").value = nombre;
@@ -145,7 +141,7 @@ function abrirModalEditar(id, nombre) {
 function eliminarCliente(id) {
   if (!confirm("¿Estás seguro de eliminar este cliente?")) return;
 
-  fetch(`http://localhost:3000/api/clientes/${id}`, {
+  fetch(`https://pedidos-fj.onrender.com/api/clientes/${id}`, {
     method: "DELETE"
   })
     .then(res => res.json())
@@ -157,15 +153,12 @@ function volver() {
   window.location.href = "index1.html";
 }
 
-// ======================
-// Ver pedidos en modal
-// ======================
 function verPedidos(clienteId, clienteNombre) {
   document.getElementById("nombreClienteModal").textContent = clienteNombre;
   const lista = document.getElementById("listaPedidos");
   lista.innerHTML = "Cargando pedidos...";
 
-  fetch(`http://localhost:3000/api/clientes/${clienteId}/pedidos`)
+  fetch(`https://pedidos-fj.onrender.com/api/clientes/${clienteId}/pedidos`)
     .then(res => res.json())
     .then(pedidos => {
       if (!pedidos.length) {
@@ -203,9 +196,6 @@ function verPedidos(clienteId, clienteNombre) {
   modal.show();
 }
 
-// ======================
-// Ver historial pagos
-// ======================
 function verHistorial(pedidoId, btn) {
   const cardBody = btn.closest(".card").querySelector(".card-body");
 
@@ -216,7 +206,7 @@ function verHistorial(pedidoId, btn) {
   }
 
   cardBody.innerHTML = "Cargando historial...";
-  fetch(`http://localhost:3000/api/pagos/${pedidoId}/historial`)
+  fetch(`https://pedidos-fj.onrender.com/api/pagos/${pedidoId}/historial`)
     .then(res => res.json())
     .then(data => {
       const total = Number(data.total) || 0;
@@ -295,13 +285,6 @@ function verHistorial(pedidoId, btn) {
     });
 }
 
-// ahora quiero que los carteles aparezcan lindos y mordernos como se usan ahora 
-// y no que aparezca un cartel como aparece ahora por ejemplo "127.0.0.1:500 dice Pago registrado" 
-
-
-// ======================
-// Descargar pedido como imagen
-// ======================
 function descargarPedido(pedidoId, clienteNombre) {
   const cardBody = document.getElementById(`pedido-${pedidoId}`);
 
